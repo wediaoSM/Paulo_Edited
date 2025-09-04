@@ -437,8 +437,10 @@ body {
   .card {
     width: 100%;
     max-width: 300px;
+ transform: scale(0.90);   /* deixa o card ~15% menor */
+  transform-origin: center; /* centraliza o redimensionamento */
+}
 
-  }
 
   .card .thumb {
     height: 350px;
@@ -683,8 +685,8 @@ body {
   .hero-image,
   .hero-layer.hero-bg {
     background-position: center top !important;
-    background-size: cover !important;
   }
+  
   .cards-section {
     background-position: center top !important;
   }
@@ -710,3 +712,19 @@ body {
 
 
 
+/* ---- OVERRIDE FINAL PARA MOBILE ---- */
+@media (max-width: 600px) {
+  .hero .hero-image.hero-image-1,
+  .hero .hero-image.hero-image-2 {
+    background-position: center 1% !important;
+    background-size: 100% auto !important; /* zoom leve no ≤600 */
+  }
+}
+
+@media (max-width: 400px) {
+  .hero .hero-image.hero-image-1,
+  .hero .hero-image.hero-image-2 {
+    background-position: center 23% !important;
+    background-size: 190% auto !important; /* mais zoom no ≤400 */
+  }
+}
