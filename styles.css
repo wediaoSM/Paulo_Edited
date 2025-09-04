@@ -1,0 +1,712 @@
+/* ===========================
+   :root — cores e variáveis
+=========================== */
+:root {
+  --bg: #05060a;
+  --card: #0b1116;
+  --muted: #9aa3ac;
+  --yellow: #ffd23f;
+  --cta1: #00ff9b;
+  --cta2: #00d07f;
+  --glass: rgba(255, 255, 255, 0.03);
+  --radius: 12px;
+  --container: 1100px;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  color: #e8f6f0;
+}
+
+/* ===========================
+   Reset básico
+=========================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  background: linear-gradient(180deg, #03040a 0%, #071018 100%);
+  font-family: var(--font-family);
+  color: var(--color);
+}
+
+/* ===========================
+   HERO
+=========================== */
+.hero {
+  position: relative;
+  min-height: 350px;
+  overflow: hidden;
+
+  display: flex;
+  /* Novo */
+  flex-direction: column;
+  /* Novo */
+  justify-content: center;
+  /* Centraliza verticalmente */
+  align-items: center;
+  /* Centraliza horizontalmente */
+  text-align: center;
+  /* Garante centralização do texto */
+}
+
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+ 
+  background-position: center 22%;
+  transform: scale(1.03);
+  filter: saturate(1.05);
+  transition: opacity 1s ease-in-out;
+  z-index: 0;
+}
+
+/* Duas imagens para fade */
+.hero-image-1 {
+  background-image: url('Imagens/nov.jpeg');
+  opacity: 1;
+}
+
+.hero-image-2 {
+  background-image: url('Imagens/sec-fundo.jpeg');
+  opacity: 0;
+}
+
+/* Overlay de transparência */
+/* colocar no final do seu arquivo para garantir override */
+.hero-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;        /* âncora no fundo */
+  height: 300px;    /* altura do overlay — ajuste aqui */
+  top: auto;        /* garante que top não sobrescreva */
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 9, 25, 0) 0%,
+    rgba(5, 9, 25, 0.35) 50%,
+    rgba(5, 9, 25, 0.8) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+/* Título */
+.hero-title {
+  position: relative;
+  z-index: 2;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 22px;
+  /* ligeiro aumento do texto */
+  font-weight: normal;
+  letter-spacing: 2px;
+  color: #e0e0e0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  margin-top: 300px;
+  /* reduzido de 290px para ficar menos separado */
+}
+
+/* Logo dentro do título */
+.hero-title .hero-logo {
+  display: block;
+  max-height: 120px;
+  /* maior no desktop */
+  width: auto;
+  margin: 0 auto -30px;
+  /* menor espaçamento entre logo e subtítulo */
+  object-fit: contain;
+}
+
+/* subtítulo/texto abaixo do logo */
+.hero-title .hero-sub {
+  display: block;
+  font-size: 25px;
+  line-height: 1.2;
+  color: #e0e0e0;
+}
+
+/* Ajustes responsivos do logo e subtítulo */
+@media (max-width: 600px) {
+  .hero-title {
+    /* se houver regras absolutas aplicadas em outro ponto, estas garantem espaço menor */
+    margin-top: 0 !important;
+    font-size: 18px !important;
+  }
+
+  .hero-title .hero-logo {
+    max-height: 80px;
+    /* reduz para mobile */
+    margin-bottom: 6px;
+  }
+
+  .hero-title .hero-sub {
+    font-size: 16px;
+    padding: 0 12px;
+  }
+
+  /* se o título for posicionado absolute em mobile, ajusta o bottom para ficar mais próximo */
+  .hero-title[style]~.hero-title,
+  .hero-title {
+    /* garante posicionamento compatível caso outras regras existam */
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: 16px !important;
+  }
+
+  .hero-title .hero-logo {
+    max-height: 56px;
+    margin-bottom: 6px;
+  }
+
+  .hero-title .hero-sub {
+    font-size: 15px;
+  }
+}
+
+/* Fade para seção abaixo */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 20px;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(to bottom,
+      rgba(7, 16, 24, 0) 0%,
+      rgba(7, 16, 24, 0.15) 30%,
+      var(--bg) 100%);
+}
+
+/* ===========================
+   CARDS SECTION
+=========================== */
+.cards-section {
+  background-image: linear-gradient(rgba(7, 10, 18, 0.78), rgba(7, 16, 24, 0.88)), url('Imagens/sec-fundo.jpeg');
+ 
+  background-position: center 25%;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 40px 0;
+}
+
+.cards-grid {
+  max-width: var(--container);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+}
+
+.card {
+  width: 100%;
+  max-width: 320px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.12));
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+}
+
+/* Thumbnail */
+.card .thumb {
+  height: 300px;
+   background-size: 80% auto !important;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 14px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.card .thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), transparent 30%);
+}
+
+/* Logo pequena */
+.card .thumb .thumb-logo {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 3;
+  background: rgba(10, 20, 22, 0.6);
+  padding: 4px 10px 4px 4px;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+
+/* Card body */
+.card .card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.city {
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  font-size: 14px;
+}
+
+.date {
+  color: var(--muted);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 6px 8px;
+  border-radius: 999px;
+  color: #dfeee6;
+  font-weight: 700;
+  font-size: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Card footer / botão */
+.card .card-footer {
+  padding: 0 16px 16px;
+}
+
+.btn {
+  background: linear-gradient(180deg, #9D7D56 0%, #9D7D56 100%);
+  padding: 12px 14px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+  color: #fff; /* antes: #002217 */
+  width: 100%;
+  text-align: center;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* ===========================
+   Responsividade
+=========================== */
+@media (max-width: 720px) {
+  .card .thumb {
+    height: 160px;
+  }
+
+  .hero-title {
+    font-size: 16px;
+  }
+
+  .cards-grid {
+    gap: 12px;
+    flex-direction: column;
+  }
+}
+
+/* ===========================
+   Ajustes responsivos adicionais
+   - 768 / 600 / 400: cards empilhados e centralizados
+=========================== */
+@media (max-width: 768px) {
+  .cards-grid {
+    flex-direction: column;
+    align-items: center;
+    /* centraliza os cards */
+    gap: 18px;
+    padding: 0 16px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 380px;
+    /* limita a largura para não ficar muito esticado */
+  }
+
+  .card .thumb {
+    height: 300px;
+    /* opcional: manter imagem grande mas proporcional */
+  }
+
+.cards-grid .card:nth-child(1) .thumb,
+.cards-grid .card:nth-child(3) .thumb,
+.cards-grid .card:nth-child(4) .thumb {
+  /* ajuste 75% para mostrar mais da imagem — mude para 70%/80% se quiser */
+  background-size: 65% auto !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  /* opcional: ajuste a altura se estiver cortando demais
+     height: 340px; */
+}
+
+.hero-logo{
+  display: block;
+  max-height: 70px;
+  /* maior no desktop */
+  width: 100%;
+  max-width: 150px;
+  margin: -10px auto -20px !important;
+  /* menor espaçamento entre logo e subtítulo */
+  object-fit: contain;
+}
+
+}
+
+@media (max-width: 600px) {
+  .cards-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 0 14px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .card .thumb {
+    height: 260px;
+  }
+
+
+  
+.cards-grid .card:nth-child(1) .thumb,
+.cards-grid .card:nth-child(3) .thumb,
+.cards-grid .card:nth-child(4) .thumb {
+  /* ajuste 75% para mostrar mais da imagem — mude para 70%/80% se quiser */
+  background-size: 74% auto !important;
+  background-position: center 25% !important;
+  background-repeat: no-repeat !important;
+  /* opcional: ajuste a altura se estiver cortando demais
+     height: 340px; */
+}
+
+.hero-logo{
+  display: block;
+  max-height: 70px;
+  /* maior no desktop */
+  width: 100%;
+  max-width: 180px;
+  margin: -110px auto -20px !important;
+  /* menor espaçamento entre logo e subtítulo */
+  object-fit: contain;
+}
+}
+
+@media (max-width: 400px) {
+  .cards-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 0 10px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 300px;
+
+  }
+
+  .card .thumb {
+    height: 350px;
+  }
+
+.cards-grid .card:nth-child(1) .thumb,
+.cards-grid .card:nth-child(3) .thumb,
+.cards-grid .card:nth-child(4) .thumb {
+
+   background-size: 100% auto !important;
+  background-position: center 48% !important;
+  background-repeat: no-repeat !important;
+}
+
+.cards-grid .card:nth-child(2) .thumb{
+
+  background-size: 170% auto !important;
+  background-position: center 50% !important;
+  background-repeat: no-repeat !important;
+}
+
+}
+
+/* ======= Correção móvel: remove "faixa azul" no meio ======= */
+/* Aplica a <= 600px */
+@media (max-width: 600px) {
+  .hero {
+    min-height: 320px;
+    /* reduz um pouco a altura para evitar corte estranho */
+    overflow: visible;
+    /* garante que nada seja recortado */
+  }
+
+  .hero-title {
+    margin-top: 0 !important;
+    /* remove o grande deslocamento vertical */
+    padding: 22px 16px;
+    /* dá espaço interno consistente */
+    font-size: 16px;
+    /* evita quebra estranha do texto */
+    line-height: 1.3;
+  }
+
+  .hero::after {
+    display: none !important;
+    /* remove o gradiente que cria a "faixa" */
+  }
+
+  /* suaviza o overlay para não formar blocos escuros */
+  .hero-overlay {
+    /* colocar no final do seu arquivo para garantir override */
+  left: 0;
+  right: 0;
+  bottom: 0;        /* âncora no fundo */
+  height: 70px;    /* altura do overlay — ajuste aqui */
+  top: auto;        /* garante que top não sobrescreva */
+  z-index: 1;
+  pointer-events: none;
+    background: linear-gradient(to bottom,
+        rgba(5, 9, 25, 0.14) 0%,
+        rgba(5, 9, 25, 0.45) 55%,
+        rgba(5, 9, 25, 0.55) 100%);
+  }
+
+  /* garante que a section logo abaixo encoste visualmente */
+  .cards-section {
+    margin-top: 0;
+  }
+}
+
+/* Aplica a <= 400px (ajustes adicionais) */
+@media (max-width: 400px) {
+  .hero {
+    min-height: 260px;
+    /* mais compacta em telas bem pequenas */
+  }
+
+  .hero-title {
+    margin-top: 0 !important;
+    padding: 16px 12px;
+    font-size: 15px;
+  }
+
+  .hero::after {
+    display: none !important;
+  }
+
+  .hero-overlay {
+    /* colocar no final do seu arquivo para garantir override */
+  left: 0;
+  right: 0;
+  bottom: 0;        /* âncora no fundo */
+  height: 70px;    /* altura do overlay — ajuste aqui */
+  top: auto;        /* garante que top não sobrescreva */
+  z-index: 1;
+  pointer-events: none;
+    background: linear-gradient(to bottom,
+        rgba(5, 9, 25, 0.14) 0%,
+        rgba(5, 9, 25, 0.45) 55%,
+        rgba(5, 9, 25, 0.55) 100%);
+  }
+}
+
+/* ====== Forçar título do hero mais abaixo só em mobile (≤600px e ≤400px) ====== */
+@media (max-width: 600px) {
+  .hero {
+    position: relative;
+    /* garante referência para o absolute abaixo */
+    min-height: 360px;
+    /* aumenta um pouco para dar espaço ao título */
+    display: block;
+    /* evita interferência de flex em mobile */
+    padding-bottom: 300px;
+  }
+
+  .hero-title {
+    left: 50%;
+    bottom: -40px;
+    /* <--- controla quão para baixo o título fica (ajuste aqui) */
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    margin: 0;
+    /* remove qualquer margin-top remanescente */
+    padding: 8px 16px;
+    text-align: center;
+    z-index: 3;
+    /* sobrepõe overlay/::after */
+    font-size: 18px;
+    line-height: 1.25;
+    background: linear-gradient(to bottom, rgba(5, 9, 25, 0.0), rgba(5, 9, 25, 0.02));
+    /* opcional, suaviza borda do texto */
+  }
+
+  .hero::after {
+    display: none !important;
+  }
+
+  /* garante que não desenhe a faixa */
+  .cards-section {
+    margin-top: 0;
+  }
+
+  /* aproxima a section imediatamente abaixo */
+}
+
+@media (max-width: 400px) {
+  .hero {
+    min-height: 300px;
+  }
+
+  .hero-title {
+    bottom: -16px !important; /* desce um pouco o título no 400px */
+    font-size: 15px !important;
+  }
+}
+
+/* ========== Remover faixa azul no mobile ========== */
+@media (max-width: 600px) {
+
+  /* Desliga overlays/gradientes que estão criando o bloco */
+  
+
+  /* Garante que a imagem do hero fique full-bleed e sem fades */
+  .hero-image {
+    background-position: center top !important;
+  }
+
+  /* Remove o gradiente escuro da cards-section (evita faixa sólida) */
+  .cards-section {
+    /* mantém a imagem de fundo, mas retira o gradiente sobre ela */
+    background-image: url('Imagens/sec-fundo.jpeg') !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center top !important;
+    background-color: transparent !important;
+    /* evita qualquer blend/overlay que gere o bloco escuro */
+    background-blend-mode: normal !important;
+    padding-top: 70px !important; /* antes 20px – desce a section de cards */
+    margin-top: 0 !important;
+  }
+
+  /* Posiciona o título levemente acima da junção — ajuste bottom se necessário */
+  .hero {
+    position: relative !important;
+    min-height: 420px !important; /* antes 340px – expõe mais da imagem do hero */
+  }
+
+  .hero-title {
+    position: absolute !important;
+    left: 50% !important;
+    /* diminua para descê-lo; aumente para subir */
+    width: calc(100% - 32px) !important;
+    margin: 0 auto 0 !important; /* remove a margem-top negativa */
+    padding: 1px 1px !important;
+    z-index: 4 !important;
+    background: transparent !important;
+    bottom: -30px !important;      /* ancorado um pouco acima da base do hero */
+  }
+}
+
+@media (max-width: 400px) {
+  .cards-section {
+    padding-top: 14px !important;
+  }
+
+  .hero {
+    min-height: 300px !important;
+  }
+
+  .hero-title {
+    bottom: -px !important; /* desce um pouco o título no 400px */
+    font-size: 15px !important;
+  
+  }
+}
+
+/* Mobile: subir mais a imagem de fundo para mostrar topo da imagem */
+@media (max-width: 768px) {
+  /* sobe levemente a imagem do hero e da section para expor mais o topo */
+  .hero-image,
+  .hero-layer.hero-bg {
+    background-position: center 8% !important;
+  }
+  .cards-section {
+    background-position: center 12% !important;
+  }
+}
+
+@media (max-width: 600px) {
+  /* força top para telas menores */
+  .hero-image,
+  .hero-layer.hero-bg {
+    background-position: center top !important;
+  }
+  .cards-section {
+    background-position: center top !important;
+  }
+}
+
+@media (max-width: 400px) {
+  /* garante cobertura e top bem ancorado em telas muito pequenas */
+  .hero-image,
+  .hero-layer.hero-bg {
+    background-position: center top !important;
+    background-size: cover !important;
+  }
+  .cards-section {
+    background-position: center top !important;
+  }
+  
+}
+
+/* Garantir que o fundo do hero apareça no mobile (768/600) */
+@media (max-width: 768px) {
+  .hero-image {
+    background-size: cover !important;
+    background-position: center 10% !important;
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-image {
+    background-size: cover !important;
+    background-position: center top !important;
+    opacity: 1 !important;
+  }
+}
+
+
+

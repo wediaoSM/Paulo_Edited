@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agenda de Eventos — Paulo Carrion</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="events.css">
+</head>
+<body>
+  <main class="page">
+
+    <!-- HERO -->
+    <header class="site-hero">
+      <div class="hero-layer hero-bg hero-bg-1" style="background-image:url('Imagens/nov.jpeg')"></div>
+      <div class="hero-layer hero-bg hero-bg-2" style="background-image:url('Imagens/nov2.jpeg')"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-sweep" aria-hidden="true"></div>
+
+      <div class="hero-shapes" aria-hidden="true"></div>
+
+      <div class="hero-panel container">
+        <div class="hero-left">
+          <img src="Imagens/lider1.png" alt="Líder Pleno" class="hero-logo" aria-hidden="true">
+          <h1 class="hero-title">
+            <span class="h-large">Transforme-se</span>
+            <span class="h-accent">— inspire o mundo</span>
+          </h1>
+          <p class="hero-text">Programas presenciais e palestras com ferramentas práticas para líderes que querem resultados reais.</p>
+
+          <div class="hero-actions">
+            <a href="index.html" class="btn ghost">Voltar ao Início</a>
+            <button id="adminToggle" class="btn ghost">Admin</button>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-stats">
+            <div class="stat"><div class="stat-num">+1200</div><div class="stat-label">Participantes</div></div>
+            <div class="stat"><div class="stat-num">+45</div><div class="stat-label">Eventos</div></div>
+            <div class="stat"><div class="stat-num">4.9</div><div class="stat-label">Avaliação média</div></div>
+          </div>
+
+          <div class="hero-note">Próximo: <strong>Curitiba — 05 a 07 de Setembro</strong></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT PANEL -->
+    <section class="content-panel container">
+      <div class="controls-row controls-top">
+        <div class="search">
+          <label for="searchInput" class="sr-only">Pesquisar evento</label>
+          <input id="searchInput" placeholder="Pesquisar por cidade, palavra-chave..." />
+        </div>
+
+        <div class="filters" role="region" aria-label="Filtros">
+          <div class="select-wrap">
+            <select id="cityFilter" aria-label="Filtrar por cidade">
+              <option value="">Todas as cidades</option>
+            </select>
+          </div>
+
+          <div class="select-wrap">
+            <select id="dateFilter" aria-label="Filtrar por mês">
+              <option value="">Todos os meses</option>
+              <option value="09">Setembro</option>
+              <option value="11">Novembro</option>
+              <option value="12">Dezembro</option>
+            </select>
+          </div>
+
+          <button id="clearFilters" class="btn ghost" aria-label="Limpar filtros">Limpar</button>
+        </div>
+      </div>
+
+      <div class="agenda-grid-wrap">
+        <div id="agendaGrid" class="agenda-grid" role="list"></div>
+      </div>
+    </section>
+
+    <!-- ADMIN: login modal -->
+    <div id="adminLogin" class="admin-modal hidden" role="dialog" aria-hidden="true">
+      <div class="admin-panel">
+        <button class="admin-close" id="adminClose" aria-label="Fechar">✕</button>
+        <h3>Área Administrativa — Login</h3>
+        <form id="loginForm" class="admin-form">
+          <label>E-mail
+            <input id="adminUser" type="text" placeholder="admin" required>
+          </label>
+          <label>Senha
+            <input id="adminPass" type="password" placeholder="senha" required>
+          </label>
+          <div class="admin-actions">
+            <button type="submit" class="btn">Entrar</button>
+            <button type="button" id="adminCancel" class="btn ghost">Cancelar</button>
+          </div>
+        
+        </form>
+      </div>
+    </div>
+
+    <!-- ADMIN PANEL (central modal) -->
+    <aside id="adminDrawer" class="admin-drawer hidden" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="admin-panel">
+        <div class="admin-header">
+          <h3>Painel Admin</h3>
+          <div class="admin-header-actions">
+            <button id="adminLogout" class="btn ghost">Logout</button>
+            <button id="adminCloseDrawer" class="btn ghost" aria-label="Fechar painel">Fechar</button>
+          </div>
+        </div>
+
+        <div class="admin-body">
+          <section class="admin-section">
+            <h4>Adicionar / Editar Evento</h4>
+            <form id="eventForm" class="admin-form">
+              <input type="hidden" id="evId" value="">
+              <label>Título / Cidade
+                <input id="evCity" type="text" placeholder="CURITIBA/PR" required>
+              </label>
+
+              <label>Datas (rótulo)
+                <input id="evDateLabel" type="text" placeholder="05, 06 e 07 de Setembro" required>
+              </label>
+
+              <label>Mês (MM)
+                <input id="evMonth" type="text" placeholder="09" maxlength="2" required>
+              </label>
+
+              <label>Local / Venue
+                <input id="evVenue" type="text" placeholder="TREINAMENTO PRESENCIAL" required>
+              </label>
+
+              <label>Preço / Call-to-action
+                <input id="evPrice" type="text" placeholder="GARANTA A SUA VAGA!" required>
+              </label>
+
+              <!-- IMAGE: accepts URL or upload file -->
+              <label>Imagem (URL ou upload)
+                <input id="evImg" type="text" placeholder="Imagens/banner1.JPG ou https://..." >
+              </label>
+              <label>OU faça upload (jpg/png) — escolha um arquivo
+                <input id="evFile" type="file" accept="image/*">
+              </label>
+
+              <div class="image-preview">
+                <img id="evPreview" alt="Preview da imagem" src="" />
+                <div class="preview-actions">
+                  <button id="editImage" type="button" class="btn ghost" title="Editar imagem (arrastar/zoom)">Editar imagem</button>
+                  <button id="downloadImg" type="button" class="btn ghost">Exportar imagem</button>
+                  <button id="clearImage" type="button" class="btn ghost">Remover imagem</button>
+                </div>
+                <small class="admin-note">Ao subir um arquivo, ele será convertido para imagem embutida (base64) e salvo no evento.</small>
+              </div>
+
+              <label>Descrição
+                <textarea id="evDesc" rows="3" placeholder="Descrição curta do evento"></textarea>
+              </label>
+
+              <div class="schedule-editor">
+                <div class="sched-head">
+                  <strong>Programação</strong>
+                  <button id="addSched" type="button" class="btn ghost">Adicionar item</button>
+                </div>
+                <div id="schedList" class="sched-list"></div>
+              </div>
+
+              <div class="admin-actions">
+                <button id="saveEvent" type="submit" class="btn">Salvar evento</button>
+                <button id="resetForm" type="button" class="btn ghost">Limpar</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="admin-section">
+            <h4>Eventos existentes</h4>
+            <div id="adminList" class="admin-list"></div>
+          </section>
+        </div>
+      </div>
+    </aside>
+
+    <div id="modal" class="modal hidden" role="dialog" aria-hidden="true" aria-modal="true"></div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© <span id="year"></span> Paulo Carrion — Todos os direitos reservados.</p>
+      </div>
+    </footer>
+  </main>
+
+<script type="module" src="firebase-init.js"></script>
+
+<!-- events.js precisa ser carregado como module para podermos importar/exportar -->
+<script type="module" src="events.js"></script>
+
+
+</body>
+</html>
