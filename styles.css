@@ -926,7 +926,21 @@ body::-webkit-scrollbar {
   }
 }
 
-@media (max-width: 400px) {
+
+
+@media (max-width: 768px) {
+  .hero-title .hero-logo {
+    max-height: 56px;
+    margin-bottom: 8px !important;
+  }
+
+   .hero-title .hero-sub {
+    font-size: 22px;
+  }
+  
+  }
+
+  @media (max-width: 400px) {
   .hero-title {
     font-size: 16px !important;
   }
@@ -940,15 +954,3 @@ body::-webkit-scrollbar {
     font-size: 15px;
   }
 }
-
-@media (max-width: 768px) {
-  .hero-title .hero-logo {
-    max-height: 56px;
-    margin-bottom: 8px !important;
-  }
-
-   .hero-title .hero-sub {
-    font-size: 22px;
-  }
-  
-  }
