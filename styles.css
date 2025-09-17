@@ -231,7 +231,7 @@ body::-webkit-scrollbar {
   .hero-title .hero-logo {
     max-height: 80px;
     /* reduz para mobile */
-    margin-bottom: 6px;
+    margin-bottom: 10px !important;
   }
 
   .hero-title .hero-sub {
@@ -246,20 +246,7 @@ body::-webkit-scrollbar {
   }
 }
 
-@media (max-width: 400px) {
-  .hero-title {
-    font-size: 16px !important;
-  }
 
-  .hero-title .hero-logo {
-    max-height: 56px;
-    margin-bottom: 6px;
-  }
-
-  .hero-title .hero-sub {
-    font-size: 15px;
-  }
-}
 
 /* Fade para seção abaixo */
 .hero::after {
@@ -490,7 +477,7 @@ body::-webkit-scrollbar {
     max-height: 70px;
     /* maior no desktop */
     width: 100%;
-    max-width: 150px;
+    max-width: 180px;
     margin: -10px auto -20px !important;
     /* menor espaçamento entre logo e subtítulo */
     object-fit: contain;
@@ -938,3 +925,30 @@ body::-webkit-scrollbar {
     background: rgba(20, 20, 20, 0.6);
   }
 }
+
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: 16px !important;
+  }
+
+  .hero-title .hero-logo {
+    max-height: 56px;
+    margin-bottom: 6px !important;
+  }
+
+  .hero-title .hero-sub {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title .hero-logo {
+    max-height: 56px;
+    margin-bottom: 8px !important;
+  }
+
+   .hero-title .hero-sub {
+    font-size: 22px;
+  }
+  
+  }
