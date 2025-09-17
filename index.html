@@ -6,11 +6,24 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Paulo Carrion</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Fonte para o modal -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* prevenir scroll body quando modal aberto */
+    body.modal-open {
+      overflow: hidden;
+    }
+  </style>
 </head>
 
 <body>
-<!-- Inicializa Firebase (coloque seu firebaseConfig nesse arquivo) -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-brand">PAULO CARRION</div>
+    </div>
+  </nav>
+  <!-- Inicializa Firebase (coloque seu firebaseConfig nesse arquivo) -->
 
 
   <main class="page">
@@ -20,8 +33,8 @@
       <div class="hero-image hero-image-2" style="background-image: url('Imagens/nov2.jpeg');"></div>
       <div class="hero-overlay"></div>
       <h1 class="hero-title">
-        <img src="Imagens/lider1.png" alt="LÍDER PLENO" class="hero-logo">
-        <span class="hero-sub">Transforme a si mesmo para inspirar o mundo ao seu redor</span>
+        <img src="Imagens/Líder.png" alt="LÍDER PLENO" class="hero-logo">
+        <span class="hero-sub">TODOS SOMOS LÍDERES, MAS POUCOS SABEM DISSO</span>
       </h1>
     </header>
 
@@ -36,7 +49,7 @@
             <div class="pill">TREINAMENTO PRESENCIAL</div>
           </div>
           <div class="card-footer">
-            <button class="btn" onclick="window.location.href='events.html'">SAIBA MAIS!</button>
+            <button class="btn" onclick="window.location.href='events.html'">VER EVENTOS!</button>
           </div>
         </div>
         <!-- Card 2 -->
@@ -47,7 +60,7 @@
             <div class="pill">TREINAMENTO PRESENCIAL</div>
           </div>
           <div class="card-footer">
-            <button class="btn">SAIBA MAIS!</button>
+            <button class="btn" id="openImageModalBtn" type="button">SEJA LÍDER!</button>
           </div>
         </div>
         <!-- Card 3 -->
@@ -58,7 +71,7 @@
             <div class="pill">TREINAMENTO PRESENCIAL</div>
           </div>
           <div class="card-footer">
-            <button class="btn">SAIBA MAIS!</button>
+            <button class="btn" onclick="window.open('https://wa.me/5516988270009', '_blank')">SAIBA MAIS!</button>
           </div>
         </div>
         <!-- Card 4 -->
@@ -69,22 +82,70 @@
             <div class="pill">TREINAMENTO PRESENCIAL</div>
           </div>
           <div class="card-footer">
-            <button class="btn">SAIBA MAIS!!</button>
+            <button class="btn"
+              onclick="window.open('https://www.companhiadasletras.com.br/testeinteligenciapositiva/?srsltid=AfmBOoo82OXPGb2UZxUsvxQ4RjNDusvOHcovULI_YA-KxlKZSLPmy65u', '_blank')">EU
+              QUERO!</button>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- Modal de Imagem -->
+    <div id="imageModal" class="image-modal" aria-hidden="true">
+      <div class="image-modal-backdrop" data-close-modal></div>
+      <div class="image-modal-content">
+        <button class="image-modal-close" data-close-modal>×</button>
+        <img src="" alt="Líder Pleno" id="modalImage" />
+      </div>
+    </div>
+
   </main>
 
+  <script>
+    // Script para o modal de imagem
+    (function () {
+      const modal = document.getElementById('imageModal');
+      if (!modal) return;
+
+      const openBtn = document.getElementById('openImageModalBtn');
+      const modalImage = document.getElementById('modalImage');
+      const closeTriggers = modal.querySelectorAll('[data-close-modal]');
+      const imagePath = 'Imagens/mod.jpeg'; // Caminho da imagem a ser exibida
+
+      function openModal() {
+        modalImage.setAttribute('src', imagePath);
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+      }
+
+      function closeModal() {
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        // Atraso para remover o src para a animação de fade-out funcionar
+        setTimeout(() => {
+          modalImage.setAttribute('src', '');
+        }, 300);
+      }
+
+      if (openBtn) {
+        openBtn.addEventListener('click', openModal);
+      }
+
+      closeTriggers.forEach(trigger => {
+        trigger.addEventListener('click', closeModal);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+          closeModal();
+        }
+      });
+    })();
+  </script>
+
   <script src="script.js"></script>
-  
-<script type="module" src="firebase-init.js"></script>
-
-<!-- events.js precisa ser carregado como module para podermos importar/exportar -->
-<script type="module" src="events.js"></script>
-
-
-
+  <script type="module" src="firebase-init.js"></script>
+  <script type="module" src="events.js"></script>
 </body>
 
 </html>

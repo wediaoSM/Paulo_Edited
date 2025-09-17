@@ -1,16 +1,54 @@
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Agenda de Eventos — Paulo Carrion</title>
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@500;700&display=swap"
+    rel="stylesheet">
 
   <!-- Styles -->
   <link rel="stylesheet" href="events.css">
+  <style>
+    /* Botão Admin: discreto no canto superior direito */
+    #adminToggle {
+      position: fixed !important;
+      top: max(10px, env(safe-area-inset-top));
+      right: max(10px, env(safe-area-inset-right));
+      z-index: 10000;
+      padding: 4px 8px !important;
+      font-size: 12px !important;
+      line-height: 1 !important;
+      opacity: 0.15;
+      background: rgba(0, 0, 0, 0.15) !important;
+      color: #fff !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      border-radius: 999px !important;
+      box-shadow: none !important;
+      backdrop-filter: blur(4px);
+      transition: opacity .2s ease, transform .2s ease, background .2s ease;
+    }
+
+    #adminToggle:hover,
+    #adminToggle:focus {
+      opacity: 0.8;
+      background: rgba(0, 0, 0, 0.35) !important;
+      outline: none;
+    }
+
+    @media (max-width: 480px) {
+      #adminToggle {
+        padding: 3px 6px !important;
+        font-size: 11px !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <main class="page">
 
@@ -30,22 +68,31 @@
             <span class="h-large">Transforme-se</span>
             <span class="h-accent">— inspire o mundo</span>
           </h1>
-          <p class="hero-text">Programas presenciais e palestras com ferramentas práticas para líderes que querem resultados reais.</p>
+          <p class="hero-text">Programas presenciais e palestras com ferramentas práticas para líderes que querem
+            resultados reais.</p>
 
           <div class="hero-actions">
             <a href="index.html" class="btn ghost">Voltar ao Início</a>
-            <button id="adminToggle" class="btn ghost">Admin</button>
+            <button id="adminToggle" class="btn ghost">Carrion</button>
           </div>
         </div>
 
         <div class="hero-right">
           <div class="hero-stats">
-            <div class="stat"><div class="stat-num">+1200</div><div class="stat-label">Participantes</div></div>
-            <div class="stat"><div class="stat-num">+45</div><div class="stat-label">Eventos</div></div>
-            <div class="stat"><div class="stat-num">4.9</div><div class="stat-label">Avaliação média</div></div>
+            <div class="stat">
+              <div class="stat-num">+1200</div>
+              <div class="stat-label">Participantes</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">+45</div>
+              <div class="stat-label">Eventos</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">4.9</div>
+              <div class="stat-label">Avaliação média</div>
+            </div>
           </div>
 
-          <div class="hero-note">Próximo: <strong>Curitiba — 05 a 07 de Setembro</strong></div>
         </div>
       </div>
     </header>
@@ -99,7 +146,7 @@
             <button type="submit" class="btn">Entrar</button>
             <button type="button" id="adminCancel" class="btn ghost">Cancelar</button>
           </div>
-        
+
         </form>
       </div>
     </div>
@@ -133,16 +180,16 @@
               </label>
 
               <label>Local / Venue
-                <input id="evVenue" type="text" placeholder="TREINAMENTO PRESENCIAL" required>
+                <input id="evVenue" type="text" placeholder="PARQUE FERNANDO COSTA" required>
               </label>
 
               <label>Preço / Call-to-action
-                <input id="evPrice" type="text" placeholder="GARANTA A SUA VAGA!" required>
+                <input id="evPrice" type="text" placeholder="NOME DO PROGRAMA...ETC" required>
               </label>
 
               <!-- IMAGE: accepts URL or upload file -->
               <label>Imagem (URL ou upload)
-                <input id="evImg" type="text" placeholder="Imagens/banner1.JPG ou https://..." >
+                <input id="evImg" type="text" placeholder="Imagens/banner1.JPG ou https://...">
               </label>
               <label>OU faça upload (jpg/png) — escolha um arquivo
                 <input id="evFile" type="file" accept="image/*">
@@ -151,11 +198,13 @@
               <div class="image-preview">
                 <img id="evPreview" alt="Preview da imagem" src="" />
                 <div class="preview-actions">
-                  <button id="editImage" type="button" class="btn ghost" title="Editar imagem (arrastar/zoom)">Editar imagem</button>
+                  <button id="editImage" type="button" class="btn ghost" title="Editar imagem (arrastar/zoom)">Editar
+                    imagem</button>
                   <button id="downloadImg" type="button" class="btn ghost">Exportar imagem</button>
                   <button id="clearImage" type="button" class="btn ghost">Remover imagem</button>
                 </div>
-                <small class="admin-note">Ao subir um arquivo, ele será convertido para imagem embutida (base64) e salvo no evento.</small>
+                <small class="admin-note">Ao subir um arquivo, ele será convertido para imagem embutida (base64) e salvo
+                  no evento.</small>
               </div>
 
               <label>Descrição
@@ -165,7 +214,7 @@
               <div class="schedule-editor">
                 <div class="sched-head">
                   <strong>Programação</strong>
-                  <button id="addSched" type="button" class="btn ghost">Adicionar item</button>
+                  <button id="addSched" type="button" class="btn ghost">Adicionar Programação</button>
                 </div>
                 <div id="schedList" class="sched-list"></div>
               </div>
@@ -194,11 +243,12 @@
     </footer>
   </main>
 
-<script type="module" src="firebase-init.js"></script>
+  <script type="module" src="firebase-init.js"></script>
 
-<!-- events.js precisa ser carregado como module para podermos importar/exportar -->
-<script type="module" src="events.js"></script>
+  <!-- events.js precisa ser carregado como module para podermos importar/exportar -->
+  <script type="module" src="events.js"></script>
 
 
 </body>
+
 </html>

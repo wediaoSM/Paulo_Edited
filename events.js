@@ -26,12 +26,11 @@ import {
 
 // events.js — completo, com modal consertado, editor de imagem (pan/zoom) e demais funções
 const STORAGE_KEY = 'events_data_v1';
-const ADMIN_CRED = { user: 'admin', pass: '123' }; // altere se quiser
 
 /* ---------- initial data ---------- */
 const DEFAULT_EVENTS = [
-  { id: 1, city: "CURITIBA/PR", dateLabel: "05, 06 e 07 de Setembro", month: "09", venue: "TREINAMENTO PRESENCIAL", price: "GARANTA A SUA VAGA!", img: "Imagens/banner1.JPG", description: "Treinamento intensivo presencial com foco em liderança prática.", schedule: [{ time: "09:00", title: "Credenciamento", speaker: "Equipe" }] },
-  { id: 2, city: "CAMPO GRANDE/MS", dateLabel: "19, 20 e 21 de Setembro", month: "09", venue: "TREINAMENTO PRESENCIAL", price: "GARANTA A SUA VAGA!", img: "Imagens/banner3.png", description: "Treinamento com foco em liderança transformacional.", schedule: [{ time: "09:00", title: "Palestra", speaker: "Paulo" }] }
+  { id: 1, city: "CURITIBA/PR", dateLabel: "05, 06 e 07 de Setembro", month: "09", venue: "PARQUE FERNANDO COSTA", price: "NOME DO PROGRAMA...ETC!", img: "Imagens/banner1.JPG", description: "Treinamento intensivo presencial com foco em liderança prática.", schedule: [{ time: "09:00", title: "Credenciamento", speaker: "Equipe" }] },
+  { id: 2, city: "CAMPO GRANDE/MS", dateLabel: "19, 20 e 21 de Setembro", month: "09", venue: "PARQUE FERNANDO COSTA", price: "NOME DO PROGRAMA...ETC!", img: "Imagens/banner3.png", description: "Treinamento com foco em liderança transformacional.", schedule: [{ time: "09:00", title: "Palestra", speaker: "Paulo" }] }
 ];
 
 /* ---------- DOM refs ---------- */
@@ -70,6 +69,8 @@ const schedList = document.getElementById('schedList');
 const saveEvent = document.getElementById('saveEvent');
 const resetForm = document.getElementById('resetForm');
 
+
+
 let EVENTS = [];
 let loggedIn = false;
 let currentImageDataURL = ''; // stores base64 when user uploads file
@@ -80,6 +81,13 @@ let keydownHandler = null;
 let modal = document.getElementById('modal');
 let modalPanel = null;
 let modalContent = null;
+
+// fallback: remove o botão em telas pequenas (executar após DOM ready)
+if (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) {
+  const btn = document.getElementById('adminToggle');
+  if (btn) btn.style.display = 'none';
+}
+
 
 /* ---------------- persistence ---------------- */
 function loadEvents() {
@@ -108,7 +116,7 @@ function populateCityOptions() {
   base.textContent = 'Todas as cidades';
   cityFilter.appendChild(base);
 
-  const cities = [...new Set(EVENTS.map(e => e.city).filter(Boolean))].sort((a,b)=> a.localeCompare(b,'pt-BR'));
+  const cities = [...new Set(EVENTS.map(e => e.city).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
   cities.forEach(c => {
     const opt = document.createElement('option');
     opt.value = c;
@@ -126,9 +134,9 @@ function populateDateOptions() {
   base.textContent = 'Todos os meses';
   dateFilter.appendChild(base);
 
-  const months = Array.from(new Set(EVENTS.map(e => (e.month || '').toString().padStart(2,'0'))))
+  const months = Array.from(new Set(EVENTS.map(e => (e.month || '').toString().padStart(2, '0'))))
     .filter(m => m && m !== '00')
-    .sort((a,b) => Number(a) - Number(b));
+    .sort((a, b) => Number(a) - Number(b));
 
   months.forEach(m => {
     const opt = document.createElement('option');
@@ -139,7 +147,7 @@ function populateDateOptions() {
 
   initCustomSelects();
 }
- 
+
 function createCard(ev) {
   const el = document.createElement('article');
   el.className = 'card';
@@ -161,7 +169,7 @@ function createCard(ev) {
     </div>
     <div class="card-footer">
       <button class="btn" data-action="details" data-id="${ev.id}">Ver programação</button>
-      <button class="btn ghost" data-action="register" data-id="${ev.id}">Inscrever-se</button>
+     
     </div>
   `;
   return el;
@@ -313,7 +321,7 @@ function openModal(ev) {
       <div style="flex:1"></div>
 
       <div class="modal-actions">
-        <button id="modalRegister" class="btn">Inscrever-se</button>
+       
         <button id="modalCloseBtn" class="btn ghost">Fechar</button>
       </div>
     </div>
@@ -353,7 +361,7 @@ function closeModal() {
     if (modalPanel && modalContent) modalContent.innerHTML = '';
     document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
-    try { lastActiveElement && lastActiveElement.focus(); } catch (e) {}
+    try { lastActiveElement && lastActiveElement.focus(); } catch (e) { }
   }, 220);
   if (keydownHandler) document.removeEventListener('keydown', keydownHandler);
   keydownHandler = null;
@@ -395,14 +403,14 @@ function initCustomSelects() {
 
 
 const MONTH_NAMES = {
-  '01':'Janeiro','02':'Fevereiro','03':'Março','04':'Abril',
-  '05':'Maio','06':'Junho','07':'Julho','08':'Agosto',
-  '09':'Setembro','10':'Outubro','11':'Novembro','12':'Dezembro'
+  '01': 'Janeiro', '02': 'Fevereiro', '03': 'Março', '04': 'Abril',
+  '05': 'Maio', '06': 'Junho', '07': 'Julho', '08': 'Agosto',
+  '09': 'Setembro', '10': 'Outubro', '11': 'Novembro', '12': 'Dezembro'
 };
 
 function monthNameFromMM(mm) {
   if (!mm) return '';
-  const key = String(mm).padStart(2,'0');
+  const key = String(mm).padStart(2, '0');
   return MONTH_NAMES[key] || key;
 }
 
@@ -576,7 +584,7 @@ loginForm.addEventListener('submit', async (e) => {
     window.dispatchEvent(new CustomEvent('auth:state', { detail: { user: cred.user, loggedIn } }));
     closeAdminLogin();
     openAdminDrawer();
-    alert('Login bem-sucedido (Firebase).');
+    alert('Login bem-sucedido.');
   } catch (err) {
     console.error('Login error:', err);
     alert('Erro no login: ' + (err && err.message ? err.message : String(err)));
@@ -596,7 +604,7 @@ if (adminDrawer) {
 
 if (adminCloseDrawer) adminCloseDrawer.addEventListener('click', closeAdminDrawer);
 
-if (adminLogout)adminLogout.addEventListener('click', async () => {
+if (adminLogout) adminLogout.addEventListener('click', async () => {
   await signOut(auth);
   loggedIn = false;
   closeAdminDrawer();
@@ -1026,7 +1034,7 @@ function closeImageEditor() {
   if (!imgEditor) return;
   imgEditor.classList.add('hidden');
   // clear src to free memory (optional)
-  try { imgEditorState.imgEl.removeAttribute('src'); } catch (e) {}
+  try { imgEditorState.imgEl.removeAttribute('src'); } catch (e) { }
 }
 
 function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
@@ -1088,7 +1096,7 @@ function applyImageEditor() {
   canvas.height = vpH;
   const ctx = canvas.getContext('2d');
   // fill transparent background
-  ctx.clearRect(0,0,canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(imgEditorState.imgEl, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
 
   const dataURL = canvas.toDataURL('image/png');
@@ -1204,7 +1212,7 @@ function openRegistrationPrompt(ev) {
   document.documentElement.style.overflow = 'hidden';
   document.body.style.overflow = 'hidden';
 
-  setTimeout(()=> {
+  setTimeout(() => {
     const elm = modal.querySelector('#regName');
     elm && elm.focus();
   }, 120);
@@ -1333,7 +1341,7 @@ eventForm.addEventListener('submit', async (e) => {
   };
 
   if (!newEvent.city || !newEvent.dateLabel) {
-    alert('Informe pelo menos cidade e datas.');
+    alert('Evento Salvo Com Sucesso!.');
     return;
   }
 

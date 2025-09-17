@@ -16,6 +16,68 @@
 }
 
 /* ===========================
+   Navbar
+=========================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  padding: 12px 0;
+}
+
+.navbar-container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  /* antes: gradiente e 900 */
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  line-height: 1;
+  text-transform: uppercase;
+
+  /* paleta do print — dourado fosco, sem gradiente */
+  color: #fff !important;
+  /* branco sólido */
+  background: none !important;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  transition: text-shadow .2s ease;
+}
+
+.navbar-brand:hover {
+  color: #fff !important;
+  /* mantém branco no hover */
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 600px) {
+  .navbar-brand {
+    font-size: 17px;
+    letter-spacing: 1px;
+    /* menos espaçado em telas pequenas */
+  }
+
+  .navbar {
+    padding: 10px 0;
+  }
+}
+
+/* ===========================
    Reset básico
 =========================== */
 * {
@@ -30,6 +92,33 @@ body {
   background: linear-gradient(180deg, #03040a 0%, #071018 100%);
   font-family: var(--font-family);
   color: var(--color);
+}
+
+/* Ocultar barras de rolagem (permite rolar normalmente) */
+html,
+body {
+  /* Firefox e Edge antigo */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge legado */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  /* WebKit (Chrome/Safari/Edge novo) */
+}
+
+/* Opcional: também esconde em qualquer container com overflow */
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+* {
+  scrollbar-width: none;
 }
 
 /* ===========================
@@ -56,7 +145,7 @@ body {
 .hero-image {
   position: absolute;
   inset: 0;
- 
+
   background-position: center 22%;
   transform: scale(1.03);
   filter: saturate(1.05);
@@ -81,15 +170,16 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;        /* âncora no fundo */
-  height: 300px;    /* altura do overlay — ajuste aqui */
-  top: auto;        /* garante que top não sobrescreva */
-  background: linear-gradient(
-    to bottom,
-    rgba(5, 9, 25, 0) 0%,
-    rgba(5, 9, 25, 0.35) 50%,
-    rgba(5, 9, 25, 0.8) 100%
-  );
+  bottom: 0;
+  /* âncora no fundo */
+  height: 300px;
+  /* altura do overlay — ajuste aqui */
+  top: auto;
+  /* garante que top não sobrescreva */
+  background: linear-gradient(to bottom,
+      rgba(5, 9, 25, 0) 0%,
+      rgba(5, 9, 25, 0.35) 50%,
+      rgba(5, 9, 25, 0.8) 100%);
   z-index: 1;
   pointer-events: none;
 }
@@ -114,10 +204,10 @@ body {
 /* Logo dentro do título */
 .hero-title .hero-logo {
   display: block;
-  max-height: 120px;
+  max-height: 40px;
   /* maior no desktop */
   width: auto;
-  margin: 0 auto -30px;
+  margin: 0 auto 10px;
   /* menor espaçamento entre logo e subtítulo */
   object-fit: contain;
 }
@@ -192,7 +282,7 @@ body {
 =========================== */
 .cards-section {
   background-image: linear-gradient(rgba(7, 10, 18, 0.78), rgba(7, 16, 24, 0.88)), url('Imagens/sec-fundo.jpeg');
- 
+
   background-position: center 25%;
   background-repeat: no-repeat;
   position: relative;
@@ -230,7 +320,7 @@ body {
 /* Thumbnail */
 .card .thumb {
   height: 300px;
-   background-size: 80% auto !important;
+  background-size: 80% auto !important;
   background-position: center;
   position: relative;
   display: flex;
@@ -268,6 +358,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  /* Adicionado para centralização */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-grow: 1;
 }
 
 .city {
@@ -300,6 +395,10 @@ body {
 /* Card footer / botão */
 .card .card-footer {
   padding: 0 16px 16px;
+  /* Adicionado para centralização */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn {
@@ -309,13 +408,28 @@ body {
   border: none;
   cursor: pointer;
   font-weight: 800;
-  color: #fff; /* antes: #002217 */
+  color: #fff;
+  /* antes: #002217 */
   width: 100%;
   text-align: center;
+  text-decoration: none;
+  /* Adicionado para remover sublinhado */
 }
 
 .btn:active {
   transform: translateY(1px);
+}
+
+/* Estilo para o botão ghost */
+.btn.ghost {
+  background: transparent;
+  border: 1px solid rgba(157, 125, 86, 0.7);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.btn.ghost:hover {
+  background: rgba(157, 125, 86, 0.15);
+  color: #fff;
 }
 
 /* ===========================
@@ -360,27 +474,27 @@ body {
     /* opcional: manter imagem grande mas proporcional */
   }
 
-.cards-grid .card:nth-child(1) .thumb,
-.cards-grid .card:nth-child(3) .thumb,
-.cards-grid .card:nth-child(4) .thumb {
-  /* ajuste 75% para mostrar mais da imagem — mude para 70%/80% se quiser */
-  background-size: 65% auto !important;
-  background-position: center center !important;
-  background-repeat: no-repeat !important;
-  /* opcional: ajuste a altura se estiver cortando demais
+  .cards-grid .card:nth-child(1) .thumb,
+  .cards-grid .card:nth-child(3) .thumb,
+  .cards-grid .card:nth-child(4) .thumb {
+    /* ajuste 75% para mostrar mais da imagem — mude para 70%/80% se quiser */
+    background-size: 65% auto !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    /* opcional: ajuste a altura se estiver cortando demais
      height: 340px; */
-}
+  }
 
-.hero-logo{
-  display: block;
-  max-height: 70px;
-  /* maior no desktop */
-  width: 100%;
-  max-width: 150px;
-  margin: -10px auto -20px !important;
-  /* menor espaçamento entre logo e subtítulo */
-  object-fit: contain;
-}
+  .hero-logo {
+    display: block;
+    max-height: 70px;
+    /* maior no desktop */
+    width: 100%;
+    max-width: 150px;
+    margin: -10px auto -20px !important;
+    /* menor espaçamento entre logo e subtítulo */
+    object-fit: contain;
+  }
 
 }
 
@@ -397,33 +511,29 @@ body {
     max-width: 300px;
   }
 
-  .card .thumb {
-    height: 260px;
+
+
+  .cards-grid .card:nth-child(1) .thumb,
+  .cards-grid .card:nth-child(3) .thumb,
+  .cards-grid .card:nth-child(4) .thumb {
+    /* ajuste 75% para mostrar mais da imagem — mude para 70%/80% se quiser */
+    background-size: 74% auto !important;
+    background-position: center 25% !important;
+    background-repeat: no-repeat !important;
+    /* opcional: ajuste a altura se estiver cortando demais
+     height: 340px; */
   }
 
-
-  
-.cards-grid .card:nth-child(1) .thumb,
-.cards-grid .card:nth-child(3) .thumb,
-.cards-grid .card:nth-child(4) .thumb {
-  /* ajuste 75% para mostrar mais da imagem — mude para 70%/80% se quiser */
-  background-size: 74% auto !important;
-  background-position: center 25% !important;
-  background-repeat: no-repeat !important;
-  /* opcional: ajuste a altura se estiver cortando demais
-     height: 340px; */
-}
-
-.hero-logo{
-  display: block;
-  max-height: 70px;
-  /* maior no desktop */
-  width: 100%;
-  max-width: 180px;
-  margin: -110px auto -20px !important;
-  /* menor espaçamento entre logo e subtítulo */
-  object-fit: contain;
-}
+  .hero-logo {
+    display: block;
+    max-height: 70px;
+    /* maior no desktop */
+    width: 100%;
+    max-width: 180px;
+    margin: -110px auto -20px !important;
+    /* menor espaçamento entre logo e subtítulo */
+    object-fit: contain;
+  }
 }
 
 @media (max-width: 400px) {
@@ -437,30 +547,32 @@ body {
   .card {
     width: 100%;
     max-width: 300px;
- transform: scale(0.90);   /* deixa o card ~15% menor */
-  transform-origin: center; /* centraliza o redimensionamento */
-}
+    transform: scale(0.90);
+    /* deixa o card ~15% menor */
+    transform-origin: center;
+    /* centraliza o redimensionamento */
+  }
 
 
   .card .thumb {
     height: 350px;
   }
 
-.cards-grid .card:nth-child(1) .thumb,
-.cards-grid .card:nth-child(3) .thumb,
-.cards-grid .card:nth-child(4) .thumb {
+  .cards-grid .card:nth-child(1) .thumb,
+  .cards-grid .card:nth-child(3) .thumb,
+  .cards-grid .card:nth-child(4) .thumb {
 
-   background-size: 100% auto !important;
-  background-position: center 48% !important;
-  background-repeat: no-repeat !important;
-}
+    background-size: 100% auto !important;
+    background-position: center 48% !important;
+    background-repeat: no-repeat !important;
+  }
 
-.cards-grid .card:nth-child(2) .thumb{
+  .cards-grid .card:nth-child(2) .thumb {
 
-  background-size: 170% auto !important;
-  background-position: center 50% !important;
-  background-repeat: no-repeat !important;
-}
+    background-size: 170% auto !important;
+    background-position: center 50% !important;
+    background-repeat: no-repeat !important;
+  }
 
 }
 
@@ -492,13 +604,16 @@ body {
   /* suaviza o overlay para não formar blocos escuros */
   .hero-overlay {
     /* colocar no final do seu arquivo para garantir override */
-  left: 0;
-  right: 0;
-  bottom: 0;        /* âncora no fundo */
-  height: 70px;    /* altura do overlay — ajuste aqui */
-  top: auto;        /* garante que top não sobrescreva */
-  z-index: 1;
-  pointer-events: none;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* âncora no fundo */
+    height: 70px;
+    /* altura do overlay — ajuste aqui */
+    top: auto;
+    /* garante que top não sobrescreva */
+    z-index: 1;
+    pointer-events: none;
     background: linear-gradient(to bottom,
         rgba(5, 9, 25, 0.14) 0%,
         rgba(5, 9, 25, 0.45) 55%,
@@ -530,13 +645,16 @@ body {
 
   .hero-overlay {
     /* colocar no final do seu arquivo para garantir override */
-  left: 0;
-  right: 0;
-  bottom: 0;        /* âncora no fundo */
-  height: 70px;    /* altura do overlay — ajuste aqui */
-  top: auto;        /* garante que top não sobrescreva */
-  z-index: 1;
-  pointer-events: none;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* âncora no fundo */
+    height: 70px;
+    /* altura do overlay — ajuste aqui */
+    top: auto;
+    /* garante que top não sobrescreva */
+    z-index: 1;
+    pointer-events: none;
     background: linear-gradient(to bottom,
         rgba(5, 9, 25, 0.14) 0%,
         rgba(5, 9, 25, 0.45) 55%,
@@ -563,7 +681,7 @@ body {
     transform: translateX(-50%);
     width: calc(100% - 40px);
     margin: 0;
-    /* remove qualquer margin-top remanescente */
+    /* removes any remaining margin-top */
     padding: 8px 16px;
     text-align: center;
     z-index: 3;
@@ -592,7 +710,8 @@ body {
   }
 
   .hero-title {
-    bottom: -16px !important; /* desce um pouco o título no 400px */
+    bottom: -16px !important;
+    /* desce um pouco o título no 400px */
     font-size: 15px !important;
   }
 }
@@ -601,7 +720,7 @@ body {
 @media (max-width: 600px) {
 
   /* Desliga overlays/gradientes que estão criando o bloco */
-  
+
 
   /* Garante que a imagem do hero fique full-bleed e sem fades */
   .hero-image {
@@ -618,14 +737,16 @@ body {
     background-color: transparent !important;
     /* evita qualquer blend/overlay que gere o bloco escuro */
     background-blend-mode: normal !important;
-    padding-top: 70px !important; /* antes 20px – desce a section de cards */
+    padding-top: 70px !important;
+    /* antes 20px – desce a section de cards */
     margin-top: 0 !important;
   }
 
   /* Posiciona o título levemente acima da junção — ajuste bottom se necessário */
   .hero {
     position: relative !important;
-    min-height: 420px !important; /* antes 340px – expõe mais da imagem do hero */
+    min-height: 420px !important;
+    /* antes 340px – expõe mais da imagem do hero */
   }
 
   .hero-title {
@@ -633,11 +754,13 @@ body {
     left: 50% !important;
     /* diminua para descê-lo; aumente para subir */
     width: calc(100% - 32px) !important;
-    margin: 0 auto 0 !important; /* remove a margem-top negativa */
+    margin: 0 auto 0 !important;
+    /* remove a margem-top negativa */
     padding: 1px 1px !important;
     z-index: 4 !important;
     background: transparent !important;
-    bottom: -30px !important;      /* ancorado um pouco acima da base do hero */
+    bottom: -30px !important;
+    /* ancorado um pouco acima da base do hero */
   }
 }
 
@@ -651,46 +774,52 @@ body {
   }
 
   .hero-title {
-    bottom: -px !important; /* desce um pouco o título no 400px */
+    bottom: -px !important;
+    /* desce um pouco o título no 400px */
     font-size: 15px !important;
-  
+
   }
 }
 
 /* Mobile: subir mais a imagem de fundo para mostrar topo da imagem */
 @media (max-width: 768px) {
+
   /* sobe levemente a imagem do hero e da section para expor mais o topo */
   .hero-image,
   .hero-layer.hero-bg {
     background-position: center 8% !important;
   }
+
   .cards-section {
     background-position: center 12% !important;
   }
 }
 
 @media (max-width: 600px) {
+
   /* força top para telas menores */
   .hero-image,
   .hero-layer.hero-bg {
     background-position: center top !important;
   }
+
   .cards-section {
     background-position: center top !important;
   }
 }
 
 @media (max-width: 400px) {
+
   /* garante cobertura e top bem ancorado em telas muito pequenas */
   .hero-image,
   .hero-layer.hero-bg {
     background-position: center top !important;
   }
-  
+
   .cards-section {
     background-position: center top !important;
   }
-  
+
 }
 
 /* Garantir que o fundo do hero apareça no mobile (768/600) */
@@ -714,17 +843,98 @@ body {
 
 /* ---- OVERRIDE FINAL PARA MOBILE ---- */
 @media (max-width: 600px) {
+
   .hero .hero-image.hero-image-1,
   .hero .hero-image.hero-image-2 {
     background-position: center 1% !important;
-    background-size: 100% auto !important; /* zoom leve no ≤600 */
+    background-size: 100% auto !important;
+    /* zoom leve no ≤600 */
   }
 }
 
 @media (max-width: 400px) {
+
   .hero .hero-image.hero-image-1,
   .hero .hero-image.hero-image-2 {
     background-position: center 23% !important;
-    background-size: 190% auto !important; /* mais zoom no ≤400 */
+    background-size: 190% auto !important;
+    /* mais zoom no ≤400 */
+  }
+}
+
+/* Estilos para o Modal de Imagem */
+.image-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.image-modal[aria-hidden="false"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.image-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 10, 12, 0.75);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.image-modal-content {
+  position: relative;
+  z-index: 1;
+  max-width: 90%;
+  max-height: 90vh;
+  display: flex;
+}
+
+.image-modal-content img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.image-modal-close {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(20, 20, 20, 0.8);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.image-modal-close:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 600px) {
+  .image-modal-close {
+    top: 5px;
+    right: 5px;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    background: rgba(20, 20, 20, 0.6);
   }
 }
