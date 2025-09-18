@@ -14,13 +14,23 @@
     body.modal-open {
       overflow: hidden;
     }
+
+    .navbar-brand-hide {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .navbar-brand {
+      transition: opacity 0.3s;
+    }
   </style>
 </head>
 
 <body>
   <nav class="navbar">
     <div class="navbar-container">
-      <div class="navbar-brand">PAULO CARRION</div>
+      <div class="navbar-brand" id="navbarBrand">PAULO CARRION</div>
     </div>
   </nav>
   <!-- Inicializa Firebase (coloque seu firebaseConfig nesse arquivo) -->
@@ -60,7 +70,7 @@
             <div class="pill">TREINAMENTO PRESENCIAL</div>
           </div>
           <div class="card-footer">
-            <button class="btn" id="openImageModalBtn" type="button">SEJA LÍDER!</button>
+            <a class="btn" href="lider-pleno.html" onclick="event.stopPropagation()">Seja Líder</a>
           </div>
         </div>
         <!-- Card 3 -->
@@ -141,6 +151,16 @@
         }
       });
     })();
+
+    // Esconde o nome "PAULO CARRION" ao rolar para baixo
+    const navbarBrand = document.getElementById('navbarBrand');
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 80) {
+        navbarBrand.classList.add('navbar-brand-hide');
+      } else {
+        navbarBrand.classList.remove('navbar-brand-hide');
+      }
+    });
   </script>
 
   <script src="script.js"></script>
